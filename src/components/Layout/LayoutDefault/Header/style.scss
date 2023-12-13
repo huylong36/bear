@@ -1,0 +1,103 @@
+.header-panel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo{
+        height: 80px;
+        display: flex;
+        align-items: center;
+        img{
+            width: 100px;
+            object-fit: contain;
+        }
+        .sub-text-logo-header{
+            color: #02c4c1;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    }
+    .search-product-panel{
+        position: relative;
+        .input-search-product{
+            border: 1.2px solid #399da7;
+            width: 500px !important;
+            border-radius: 2px;
+            >div{
+                padding: 0;
+            }
+            input{
+                padding: 7px 15px !important; 
+            }
+            fieldset{
+                display: none;
+            }
+
+        }
+        .btn-seach{
+            position: absolute;
+            right: 0;
+        }
+    }
+    .acount-panel{
+        .btn-acount{
+            border: 1px solid #399da7;
+            color: #399da7;
+            margin: 0 10px;
+            padding: 5px 10px;
+            &:hover{
+                background-color: #399da7;
+                color: white;
+            }
+        }
+    }
+}
+#auth-form{
+    .auth-form-item {
+        .item-name {
+          color: #313334;
+          font-size: 15px;
+          font-weight: 600;
+        }
+        .input-item {
+          background: #FBFBFB;
+          border: 1px solid #F1F3F5;
+          border-radius: 10px;
+          padding: 15px;
+          margin: 15px 0 20px;
+        }
+        &.forgot-password{
+            color: #399da7;
+            cursor: pointer;
+        }
+        &.no-acount{
+            text-align: center;
+            margin: 15px 0;
+        }
+    }
+    .divider{
+        margin: 20px 0;
+        color: #ccc;
+        font-weight: 400;
+    }
+    .auth-form-btn {
+        text-align: center;
+        .btn-submit {
+          background: #399da7;
+          color: #fff;
+          font-size: 14px;
+          font-weight: bold;
+          border-radius: 5px;
+          padding: 7px 20px;
+          &.login-with-goole{
+              border-radius: 10px;
+              background-color: white;
+              color: #000;
+              border: 0;
+              box-shadow: 0 4px 10px rgba(77,82,90,.25);
+          }
+        }
+    }
+}
+.custom-dialog-auth{
+    
+}
