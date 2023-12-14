@@ -1,20 +1,30 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Button, Divider, Grid, InputAdornment, Container } from '@mui/material';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import AcountIcon from '../../../../assets/images/account.png';
 import Logo from '../../../../assets/images/logo.png';
 import PasswordIcon from '../../../../assets/images/password.png';
 import GoogleIcon from '../../../../assets/images/google.png';
 import { FCDialog } from '../../../Dialog';
 import InputField from '../../../TextField';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import './style.scss';
+const LoginSchema = yup.object().shape({
+    account: yup.string().required(''),
+    password: yup.string().required(''),
+});
+
 function Header() {
     const [open, setOpen] = useState(false);
     const [view, setView] = useState(0);
+    const formRef = useRef(null);
     const openLogin = () => {
         setOpen(!open)
         setView(1);
     }
+
     const openRegister = () => {
         setOpen(!open)
         setView(2);
@@ -29,57 +39,73 @@ function Header() {
             setView(1);
         }
     }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(LoginSchema),
+    });
+
+
+    const handleLogin = (data: {
+        account: string,
+        password: string
+    }) => {
+        console.log('data', data)
+    }
+
     const renderContentLogin = () => {
         return (
-            <div id="auth-form">
-                <div className="auth-form-item">
-                    <label htmlFor="" className="item-name">{"Tài khoản"} (*)</label>
-                    <div className="input-item">
-                        <InputField
-                            startAdornment={(<InputAdornment position="start">
-                                <img width={25} height={25} src={AcountIcon} alt="user" />
-                            </InputAdornment>)}
-                            placeholder="Nhập tài khoản"
-                        />
+            <form onSubmit={handleSubmit(handleLogin)} ref={formRef}>
+                <div id="auth-form">
+                    <div className="auth-form-item">
+                        <label htmlFor="" className="item-name">{"Tài khoản"} (*)</label>
+                        <div className="input-item">
+                            <InputField
+                                startAdornment={(<InputAdornment position="start">
+                                    <img width={25} height={25} src={AcountIcon} alt="user" />
+                                </InputAdornment>)}
+                                placeholder="Nhập tài khoản"
+                            />
+                        </div>
+                    </div>
+                    <div className="auth-form-item">
+                        <label htmlFor="" className="item-name">{"Mật khẩu"} (*)</label>
+                        <div className="input-item">
+                            <InputField
+                                startAdornment={(<InputAdornment position="start">
+                                    <img width={25} height={25} src={PasswordIcon} alt="password" />
+                                </InputAdornment>)}
+                                placeholder="Nhập mật khẩu"
+                                type="password"
+                            />
+                        </div>
+                    </div>
+                    <div className="auth-form-item forgot-password">
+                        <span>Quên mật khẩu ?</span>
+                    </div>
+                    <div className="auth-form-btn">
+                        <Button
+                            type="submit"
+                            variant="outlined"
+                            className="btn-submit"
+                        >Đăng nhập</Button>
+                    </div>
+                    <div className="divider">
+                        <Divider>hoặc</Divider>
+                    </div>
+                    <div className="auth-form-btn">
+                        <Button
+                            variant="outlined"
+                            className="btn-submit login-with-goole"
+                        ><img style={{ width: "35px", marginRight: "5px" }} alt="google" src={GoogleIcon} />Đăng nhập với google</Button>
+                    </div>
+                    <div className="auth-form-item no-acount">
+                        <span>Bạn chưa có tài khoản ? <span style={{ cursor: "pointer", color: "#399da7" }} onClick={() => onChangeView(1)}>Đăng ký ngay</span></span>
                     </div>
                 </div>
-                <div className="auth-form-item">
-                    <label htmlFor="" className="item-name">{"Mật khẩu"} (*)</label>
-                    <div className="input-item">
-                        <InputField
-                            startAdornment={(<InputAdornment position="start">
-                                <img width={25} height={25} src={PasswordIcon} alt="password" />
-                            </InputAdornment>)}
-                            placeholder="Nhập mật khẩu"
-                            type="password"
-                        />
-                    </div>
-                </div>
-                <div className="auth-form-item forgot-password">
-                    <span>Quên mật khẩu ?</span>
-                </div>
-                <div className="auth-form-btn">
-                    <Button
-                        variant="outlined"
-                        className="btn-submit"
-                        onClick={() => { }}
-                    >Đăng nhập</Button>
-                </div>
-                <div className="divider">
-                    <Divider>hoặc</Divider>
-                </div>
-
-                <div className="auth-form-btn">
-                    <Button
-                        variant="outlined"
-                        className="btn-submit login-with-goole"
-                        onClick={() => { }}
-                    ><img style={{ width: "35px", marginRight: "5px" }} alt="google" src={GoogleIcon} />Đăng nhập với google</Button>
-                </div>
-                <div className="auth-form-item no-acount">
-                    <span>Bạn chưa có tài khoản ? <span style={{ cursor: "pointer", color: "#399da7" }} onClick={() => onChangeView(1)}>Đăng ký ngay</span></span>
-                </div>
-            </div>
+            </form>
         )
     }
     const renderContentRegister = () => {
