@@ -5,6 +5,6 @@ import { ApiConfig } from "./config"
 export const apiRegister = async (payload: { userInfo: UserInfo }) => {
     return ApiConfig(EndPoint.REGISTER, payload)
 }
-export const apiLogin = async (payload: { userInfo: UserInfo }) => {
+export const apiLogin = async (payload: { account:string , password:string }) => {
     return ApiConfig(EndPoint.LOGIN, payload)
 }
