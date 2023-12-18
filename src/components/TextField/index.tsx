@@ -12,7 +12,8 @@ const InputField = forwardRef((props: PropsWithoutRef<InputBaseProps>, ref) => {
       }}
       sx={{
         ...textFieldProps.sx,
-        fontFamily: "inherit"
+        fontFamily: "inherit",
+        width:"100%"
       }}
     />
   )

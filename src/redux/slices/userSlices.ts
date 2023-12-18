@@ -12,8 +12,9 @@ const initialState: UserState = {
     loadding: false
 }
 
-export const requestRegister = createAsyncThunk('user/register', async (props: { userInfo: UserInfo }) => {
+export const  requestRegister = createAsyncThunk('user/register', async (props: { account: string, password: string }) => {
     const res = await apiRegister(props);
+    console.log('xxxx' , res)
     return res.data
 })
 export const requestLogin = createAsyncThunk('user/login', async (props: { account: string, password: string }) => {

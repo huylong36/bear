@@ -51,53 +51,7 @@
         }
     }
 }
-#auth-form{
-    .auth-form-item {
-        .item-name {
-          color: #313334;
-          font-size: 15px;
-          font-weight: 600;
-        }
-        .input-item {
-          background: #FBFBFB;
-          border: 1px solid #F1F3F5;
-          border-radius: 10px;
-          padding: 15px;
-          margin: 15px 0 20px;
-        }
-        &.forgot-password{
-            color: #399da7;
-            cursor: pointer;
-        }
-        &.no-acount{
-            text-align: center;
-            margin: 15px 0;
-        }
-    }
-    .divider{
-        margin: 20px 0;
-        color: #ccc;
-        font-weight: 400;
-    }
-    .auth-form-btn {
-        text-align: center;
-        .btn-submit {
-          background: #399da7;
-          color: #fff;
-          font-size: 14px;
-          font-weight: bold;
-          border-radius: 5px;
-          padding: 7px 20px;
-          &.login-with-goole{
-              border-radius: 10px;
-              background-color: white;
-              color: #000;
-              border: 0;
-              box-shadow: 0 4px 10px rgba(77,82,90,.25);
-          }
-        }
-    }
-}
+
 .custom-dialog-auth{
     
 }
