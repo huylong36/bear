@@ -2,18 +2,22 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Button, Container } from '@mui/material';
 import { useState } from 'react';
 import Logo from '../../../../assets/images/logo.png';
+import { useAppSelector } from '../../../../redux/hook';
 import InputField from '../../../TextField';
 import { Auth } from '../Auth/auth';
+import { userState } from '../../../../redux/slices/userSlices';
 import './style.scss';
+import { useSelector } from 'react-redux';
 
 
 
 function Header() {
     const [view, setView] = useState(-1);
-    const open = view !== -1;
     const openAuth = (view: number) =>{
         setView(view);
     }
+    const userReducer = useAppSelector(store => store.userState);
+    console.log('userReducer ' , userReducer)
     return (
        <>
          <Container>
@@ -34,7 +38,7 @@ function Header() {
                 </div>
             </div>
         </Container>
-        {open && <Auth open={open} handleCloseLogin={() => openAuth(-1)} initView={view} />}
+        {view !== -1 && <Auth open={view !== -1} handleCloseLogin={() => openAuth(-1)} initView={view} setView={setView}/>}
        </>
     )
 }

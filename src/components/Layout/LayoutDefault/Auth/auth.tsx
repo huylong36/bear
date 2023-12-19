@@ -8,15 +8,14 @@ import AcountIcon from '../../../../assets/images/account.png';
 import GoogleIcon from '../../../../assets/images/google.png';
 import PasswordIcon from '../../../../assets/images/password.png';
 import BearConfig from '../../../../modules/shared/common/configs';
-import { useAppDispatch } from '../../../../redux/hook';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hook';
 import { requestLogin, requestRegister } from '../../../../redux/slices/userSlices';
 import { FCDialog } from '../../../Dialog';
 import InputField from '../../../TextField';
 import './style.scss';
 
-export const Auth = (props: { open: boolean, handleCloseLogin: () => void; initView: number; }) => {
-    const { open, handleCloseLogin, initView } = props;
-    const [view, setView] = useState(initView);
+export const Auth = (props: { open: boolean, handleCloseLogin: () => void; initView: number; setView: any  }) => {
+    const { open, handleCloseLogin, initView: view, setView =() => {} } = props;
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useAppDispatch();
     const onChangeView = (view: number) => {
@@ -35,11 +34,18 @@ export const Auth = (props: { open: boolean, handleCloseLogin: () => void; initV
     const handleRegister = async (data: {
         account: string,
         password: string,
+        email:string,
+        phone:string,
+        address:string
+        
     }) => {
         try {
             const actionResult = await dispatch(requestRegister({
                 account: data.account,
                 password: data.password,
+                email: data.email,
+                phone: data.phone,
+                address: data.address
             }))
             const res = unwrapResult(actionResult);
             switch (res.loginCode) {
@@ -49,7 +55,7 @@ export const Auth = (props: { open: boolean, handleCloseLogin: () => void; initV
                 case BearConfig.REGISTER_SUCCESS:
                     enqueueSnackbar("Đăng ký thành công", { variant: "success" });
                     Cookies.set("user", JSON.stringify(res.accessToken));
-                    window.location.href = '/';
+                    // window.location.href = '/';
                     break;
                 default:
                     break;
@@ -82,7 +88,9 @@ export const Auth = (props: { open: boolean, handleCloseLogin: () => void; initV
                 case BearConfig.LOGIN_SUCCESS:
                     enqueueSnackbar("Đăng nhập thành công", { variant: "success" });
                     Cookies.set("user", JSON.stringify(res.accessToken));
-                    window.location.href = '/';
+                    // window.location.href = '/';
+                    setView(-1)
+                    
                     break;
                 default:
                     break;

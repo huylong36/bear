@@ -12,9 +12,8 @@ const initialState: UserState = {
     loadding: false
 }
 
-export const  requestRegister = createAsyncThunk('user/register', async (props: { account: string, password: string }) => {
+export const  requestRegister = createAsyncThunk('user/register', async (props: { account: string, password: string, email:string, phone:string, address:string}) => {
     const res = await apiRegister(props);
-    console.log('xxxx' , res)
     return res.data
 })
 export const requestLogin = createAsyncThunk('user/login', async (props: { account: string, password: string }) => {
@@ -32,8 +31,14 @@ export const userSlice = createSlice({
             state.loadding = true
         })
         builder.addCase(requestRegister.fulfilled, (state, action:PayloadAction<UserInfo>) =>{
-            console.log(" -- " , state, action);
-        } )
+            state.userInfo = action.payload;
+        })
+        builder.addCase(requestLogin.pending, (state) =>{
+            state.loadding = true
+        })
+        builder.addCase(requestLogin.fulfilled, (state, action:PayloadAction<UserInfo>) =>{
+            state.userInfo = action.payload;
+        })
     }
 })
 export const userState = (state : RootState) => state.userState;
