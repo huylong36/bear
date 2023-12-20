@@ -3,13 +3,29 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./index.scss";
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { ConfigProvider } from "antd"
+import { BrowserRouter } from "react-router-dom"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <ConfigProvider
+        theme={{
+          token: {
+            fontFamily: "inherit"
+          }
+        }}
+      >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ConfigProvider>
+    </Provider>
   </React.StrictMode>
 );
 

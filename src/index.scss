@@ -11,3 +11,31 @@ body {
   padding: 0;
   @include custom-scroll();
 }
+#main-app {
+  min-height: 100vh;
+  background-color: #fff;
+  &.fixed-sider {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    @include custom-scroll();
+  }
+  #main-content {
+    padding: 8px;
+  }
+}
+.page-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.5rem !important;
+}
+
+.ant-layout-sider-collapsed { 
+  width: 400px;
+  .ant-layout-header {
+    display: none;
+  }
+}

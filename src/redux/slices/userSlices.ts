@@ -5,14 +5,16 @@ import { RootState } from "../store";
 
 export interface UserState {
     userInfo: UserInfo | null,
-    loadding: boolean
+    loadding: boolean,
+    isLogin: boolean
 }
 const initialState: UserState = {
     userInfo: null,
-    loadding: false
+    loadding: false,
+    isLogin: false
 }
 
-export const  requestRegister = createAsyncThunk('user/register', async (props: { account: string, password: string, email:string, phone:string, address:string}) => {
+export const requestRegister = createAsyncThunk('user/register', async (props: { account: string, password: string, email: string, phone: string, address: string }) => {
     const res = await apiRegister(props);
     return res.data
 })
@@ -20,26 +22,35 @@ export const requestLogin = createAsyncThunk('user/login', async (props: { accou
     const res = await apiLogin(props);
     return res.data
 })
+export const requestLogout = createAsyncThunk('user/login', async () => {
+    // const res = await apiLogin(props);
+    // return res.data
+})
 
 
 export const userSlice = createSlice({
-    name:"user",
+    name: "user",
     initialState,
-    reducers:{ },
-    extraReducers: (builder) =>{
-        builder.addCase(requestRegister.pending, (state) =>{
+    reducers: {
+        setIsLogin: (state, action: PayloadAction<boolean>) => {
+            state.isLogin = action.payload
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(requestRegister.pending, (state) => {
             state.loadding = true
         })
-        builder.addCase(requestRegister.fulfilled, (state, action:PayloadAction<UserInfo>) =>{
+        builder.addCase(requestRegister.fulfilled, (state, action: PayloadAction<UserInfo>) => {
             state.userInfo = action.payload;
         })
-        builder.addCase(requestLogin.pending, (state) =>{
+        builder.addCase(requestLogin.pending, (state) => {
             state.loadding = true
         })
-        builder.addCase(requestLogin.fulfilled, (state, action:PayloadAction<UserInfo>) =>{
+        builder.addCase(requestLogin.fulfilled, (state, action: PayloadAction<UserInfo>) => {
             state.userInfo = action.payload;
         })
     }
 })
-export const userState = (state : RootState) => state.userState;
+export const userState = (state: RootState) => state.userState;
+export const { setIsLogin } = userSlice.actions;
 export default userSlice.reducer;
